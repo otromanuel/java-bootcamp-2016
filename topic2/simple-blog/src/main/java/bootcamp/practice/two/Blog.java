@@ -1,13 +1,16 @@
 package bootcamp.practice.two;
 
+import java.util.ArrayList;
+
 public class Blog {
 
+	public static final int NUMBER_OF_RECENT_POSTS = 10;
 	private EntryDAO entryDao;
 
 	public Blog() {
 		entryDao = new EntryDAO();
 	}
-	
+
 	public Blog(EntryDAO entryDao) {
 		this.entryDao = entryDao;
 	}
@@ -24,17 +27,11 @@ public class Blog {
 		entryDao.delete(entry);
 	}
 
-	public void showRecentEntries() {
-		for (int i = 0; i < 10; i++) {
-			showEntry(entryDao.findAll().get(i));
-		}
+	public ArrayList<BlogEntry> getRecentEntries() {
+		ArrayList<BlogEntry> allposts = entryDao.findAll();
+		ArrayList<BlogEntry> recent_posts = new ArrayList<BlogEntry>();
+		for (int i = 0; i < NUMBER_OF_RECENT_POSTS; i++)
+			recent_posts.add(allposts.get(i));
+		return recent_posts;
 	}
-
-	public void showEntry(BlogEntry entry) {
-		System.out.println("Written " + entry.getDate().toString());
-		System.out.println(entry.getTitle().toUpperCase());
-		System.out.println(entry.getContent());
-		System.out.println("");
-	}
-	
 }

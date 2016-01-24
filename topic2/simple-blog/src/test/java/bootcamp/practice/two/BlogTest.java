@@ -1,50 +1,64 @@
 package bootcamp.practice.two;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import static org.mockito.Mockito.*;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 public class BlogTest {
+
+	Blog blog;
+
+	@Before
+	public void setUp() {
+		blog = new Blog();
+	}
 
 	// Post new entry
 	@Test
 	public void whenNewEntryThenBlogHasNewEntry() {
-		Blog blog = new Blog();
-		BlogEntry entry = new BlogEntry("TDD Best Practices", "RED. GREEN. REFACTOR. REPEAT");
-		blog.newEntry(entry);
+		BlogEntry mockEntry = mock(BlogEntry.class);
+		when(mockEntry.getTitle()).thenReturn("TDD Best Practices");
+		blog.newEntry(mockEntry);
 		Assert.assertNotNull(blog.getEntryByTitle("TDD Best Practices"));
 	}
 
 	// Delete existing entry
 	@Test
 	public void whenDeleteEntryThenBlogDeletesEntry() {
-		Blog blog = new Blog();
-		BlogEntry entry = new BlogEntry("TDD Best Practices II", "RED. GREEN. REFACTOR. REPEAT");
-		blog.newEntry(entry);
-		blog.deleteEntry(entry);
+		
+		BlogEntry mockEntry = mock(BlogEntry.class);
+		when(mockEntry.getTitle()).thenReturn("TDD Best Practices II");
+		blog.newEntry(mockEntry);
+		blog.deleteEntry(mockEntry);
 		Assert.assertNull(blog.getEntryByTitle("TDD Best Practices II"));
 	}
 
 	// Show 10 most recent entries
 	@Test
 	public void whenShowRecentthen10MoreRecent() {
-//		Blog mockedBlog = mock(Blog.class);
-//			
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 1", "bla bla bla 1"));
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 2", "bla bla bla 2"));
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 3", "bla bla bla 3"));
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 4", "bla bla bla 4"));
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 5", "bla bla bla 5"));
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 6", "bla bla bla 6"));
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 7", "bla bla bla 7"));
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 8", "bla bla bla 8"));
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 9", "bla bla bla 9"));
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 10", "bla bla bla 10"));
-//		mockedBlog.newEntry(new BlogEntry("Tutorial 11", "bla bla bla 11"));
-//		mockedBlog.showRecentEntries();
-//		
-//		verify(mockedBlog, times(10)).showEntry(any(BlogEntry.class));
+
+		BlogEntry mockEntry;
+		for (int i = 0; i < 15; i++) {
+			mockEntry = mock(BlogEntry.class);
+			when(mockEntry.getTitle()).thenReturn("Title " + i);
+			blog.newEntry(mockEntry);
+		}
+
+		Assert.assertEquals(Blog.NUMBER_OF_RECENT_POSTS, blog.getRecentEntries().size());
+		Assert.assertEquals("Title 14", blog.getRecentEntries().get(0).getTitle());
+		Assert.assertEquals("Title 13", blog.getRecentEntries().get(1).getTitle());
+		Assert.assertEquals("Title 12", blog.getRecentEntries().get(2).getTitle());
+		Assert.assertEquals("Title 11", blog.getRecentEntries().get(3).getTitle());
+		Assert.assertEquals("Title 10", blog.getRecentEntries().get(4).getTitle());
+		Assert.assertEquals("Title 9", blog.getRecentEntries().get(5).getTitle());
+		Assert.assertEquals("Title 8", blog.getRecentEntries().get(6).getTitle());
+		Assert.assertEquals("Title 7", blog.getRecentEntries().get(7).getTitle());
+		Assert.assertEquals("Title 6", blog.getRecentEntries().get(8).getTitle());
+		Assert.assertEquals("Title 5", blog.getRecentEntries().get(9).getTitle());
+		
 	}
+	
 
 }

@@ -3,11 +3,11 @@ package bootcamp.practice.two;
 import java.util.ArrayList;
 
 public class EntryDAO implements DAO<BlogEntry> {
-	
+
 	ArrayList<BlogEntry> entries;
-	
-	public EntryDAO(){
-		 this.entries = new ArrayList<BlogEntry>();
+
+	public EntryDAO() {
+		this.entries = new ArrayList<BlogEntry>();
 	}
 
 	public BlogEntry findById(int id) {
@@ -21,15 +21,15 @@ public class EntryDAO implements DAO<BlogEntry> {
 
 	public void delete(BlogEntry entity) {
 		entries.remove(entity);
-		
+
 	}
 
 	public void save(BlogEntry entity) {
-		entries.add(entity);		
+		entries.add(0, entity);
 	}
-	
+
 	public BlogEntry findByName(String name) {
-		int i = 0;		
+		int i = 0;
 		while ((i < entries.size()) && (entries.get(i).getTitle() != name))
 			i++;
 		if (i < entries.size())
@@ -37,6 +37,5 @@ public class EntryDAO implements DAO<BlogEntry> {
 		else
 			return null;
 	}
-	
 
 }
