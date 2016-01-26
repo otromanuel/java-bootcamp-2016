@@ -1,0 +1,24 @@
+API Specicification
+
+USER REPOSITORY SERVICE
+A service to Create Read Update Delete USERS.
+
+// Add or update a user on the User Repository.
+saveUser
+Params: User user.
+Returns: void.
+
+// Get a user by its unique id.
+getUserById
+Params: int userid.
+Returns: User.
+
+// Get all users on the repository.
+getAllUsers
+Params: none.
+Returns: List of Users.
+
+// Remove a User from repository.
+deleteUser
+Params: int userid
+Returns: boolean.

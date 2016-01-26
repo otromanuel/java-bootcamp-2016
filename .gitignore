@@ -18,4 +18,7 @@ hs_err_pid*
 */bin
 */target
 
-
+#Config files
+.settings
+.classpath
+.project
