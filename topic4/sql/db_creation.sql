@@ -12,8 +12,8 @@ DROP TABLE IF EXISTS teacher;
 -- `teacher` table
 CREATE TABLE IF NOT EXISTS `teacher` (
   `teacher_id` int(11) NOT NULL AUTO_INCREMENT, 
-  `firstname` varchar(50), 
-  `lastname` varchar(50),
+  `firstname` char(50), 
+  `lastname` char(50),
   `birthdate` date DEFAULT NULL,
   PRIMARY KEY(teacher_id)
 );
@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS `teacher` (
 -- `student` table
 CREATE TABLE IF NOT EXISTS `student` (
   `student_id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(50) DEFAULT NULL,
-  `lastname` varchar(50) DEFAULT NULL,
+  `firstname` char(50) DEFAULT NULL,
+  `lastname` char(50) DEFAULT NULL,
   `regnum` int(11) NOT NULL,
   `birthdate` date DEFAULT NULL,
   PRIMARY KEY (`student_id`)
@@ -31,13 +31,14 @@ CREATE TABLE IF NOT EXISTS `student` (
 -- `course` table
 CREATE TABLE IF NOT EXISTS `course` (
   `course_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
+  `name` char(100) NOT NULL,
   `teacher_id` int(11) DEFAULT NULL,
   `hoursbyweek` int(3) DEFAULT 0,
   PRIMARY KEY(`course_id`),
   FOREIGN KEY (teacher_id) 
         REFERENCES teacher(teacher_id)
-        ON DELETE SET NULL  
+        ON DELETE SET NULL,
+  INDEX (`name`)
 );
 
 -- `course_inscription` table
@@ -60,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `course_inscription` (
 CREATE TABLE IF NOT EXISTS `schedule` (
   `schedule_id` int(11) NOT NULL AUTO_INCREMENT,
   `course_id` int(11), 
-  `dayofweek` varchar(15),
+  `dayofweek` char(15),
   `starttime` TIME,
   `endtime` TIME,
   PRIMARY KEY (schedule_id),
@@ -85,10 +86,12 @@ INSERT INTO course VALUES
 	(default, 'Chemistry', 3, 1);
 
 INSERT INTO schedule VALUES
-	(default, 1,'MONDAY', '08:00', '09:00'),
-	(default, 1,'WEDNESDAY', '10:30', '11:30'),
-	(default, 2,'THURSDAY', '09:30', '10:30'),
-	(default, 3,'TUESDAY', '08:00', '09:00');
+	(default, 1,'Wednesday', '10:30', '11:30'),
+	(default, 1,'Monday', '08:00', '09:00'),
+	(default, 3,'Tuesday', '08:00', '09:00'),
+	(default, 2,'Thursday', '09:30', '10:30'),
+	(default, 2,'Friday', '08:30', '10:30');
+	
 
 INSERT INTO student VALUES
 	(default, 'First Name 1', 'Last Name 1', 104, '1999-02-20'),
@@ -113,34 +116,34 @@ INSERT INTO student VALUES
 	(default, 'First Name 20', 'Last Name 20', 103, '1999-01-31');
 
 INSERT INTO course_inscription VALUES
-	(1, 1, default, default, default, default),
-	(1, 2, default, default, default, default),
-	(1, 3, default, default, default, default),
-	(1, 4, default, default, default, default),
-	(1, 5, default, default, default, default),
-	(1, 6, default, default, default, default),
-	(1, 7, default, default, default, default),
-	(1, 8, default, default, default, default),
-	(1, 9, default, default, default, default),
-	(1, 10, default, default, default, default),
-	(2, 10, default, default, default, default),
-	(2, 11, default, default, default, default),
-	(2, 12, default, default, default, default),
-	(2, 13, default, default, default, default),
-	(2, 14, default, default, default, default),
-	(2, 15, default, default, default, default),
-	(2, 16, default, default, default, default),
-	(2, 17, default, default, default, default),
-	(2, 18, default, default, default, default),
-	(2, 19, default, default, default, default),
-	(3, 2, default, default, default, default),
-	(3, 4, default, default, default, default),
-	(3, 6, default, default, default, default),
-	(3, 8, default, default, default, default),
-	(3, 10, default, default, default, default),
-	(3, 12, default, default, default, default),
-	(3, 14, default, default, default, default),
-	(3, 16, default, default, default, default),
-	(3, 18, default, default, default, default),
-	(3, 20, default, default, default, default);
+	(1, 1, default, default, default, 7),
+	(1, 2, default, default, default, 5),
+	(1, 3, default, default, default, 4),
+	(1, 4, default, default, default, 2),
+	(1, 5, default, default, default, 2),
+	(1, 6, default, default, default, 6),
+	(1, 7, default, default, default, 10),
+	(1, 8, default, default, default, 4),
+	(1, 9, default, default, default, 8),
+	(1, 10, default, default, default, 5),
+	(2, 10, default, default, default, 4),
+	(2, 11, default, default, default, 2),
+	(2, 12, default, default, default, 7),
+	(2, 13, default, default, default, 7),
+	(2, 14, default, default, default, 7),
+	(2, 15, default, default, default, 9),
+	(2, 16, default, default, default, 1),
+	(2, 17, default, default, default, 7),
+	(2, 18, default, default, default, 2),
+	(2, 19, default, default, default, 2),
+	(3, 2, default, default, default, 2),
+	(3, 4, default, default, default, 2),
+	(3, 6, default, default, default, 4),
+	(3, 8, default, default, default, 7),
+	(3, 10, default, default, default, 7),
+	(3, 12, default, default, default, 9),
+	(3, 14, default, default, default, 2),
+	(3, 16, default, default, default, 1),
+	(3, 18, default, default, default, 2),
+	(3, 20, default, default, default, 6);
 
