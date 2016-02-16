@@ -18,6 +18,8 @@ import bootcamp.practice.six.model.User;
 import bootcamp.practice.six.repositories.CartRepository;
 import bootcamp.practice.six.repositories.ItemRepository;
 import bootcamp.practice.six.repositories.UserRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * Main controller of the API.
@@ -26,6 +28,7 @@ import bootcamp.practice.six.repositories.UserRepository;
  */
 @RestController
 @RequestMapping("/")
+@Api(value = "Shopping Cart REST API", produces = "application/json")
 public class StoreRestController {
 
 	private final CartRepository cartRepository;
@@ -40,6 +43,7 @@ public class StoreRestController {
 	}
 	
 	@RequestMapping(path = "{username}/additem", method = RequestMethod.POST)
+	@ApiOperation(value = "Add item", notes = "Add a new item to user's shopping cart")
 	public ResponseEntity<Void> addItem(@PathVariable String username, @RequestBody Item item) {
 		this.itemRepository.save(item);
 		Optional<Cart> cart = this.cartRepository.findByUserUsername(username);
@@ -53,6 +57,7 @@ public class StoreRestController {
 	}	
 	
 	@RequestMapping(path = "{username}/items", method = RequestMethod.GET)
+	@ApiOperation(value = "Get items", notes = "Get list of current items on user's shopping cart")
 	public ResponseEntity<List<Item>> getItems(@PathVariable String username) {
 		Optional<Cart> cart = this.cartRepository.findByUserUsername(username);
 		if ( cart.isPresent() )
@@ -62,6 +67,7 @@ public class StoreRestController {
 	}
 	
 	@RequestMapping(path = "{username}/checkout", method = RequestMethod.PUT)
+	@ApiOperation(value = "Checkout", notes = "Buy the shopping cart")
 	public ResponseEntity<Void> checkout(@PathVariable String username) {
 		Optional<Cart> cart = this.cartRepository.findByUserUsername(username);
 		if ( cart.isPresent() ) {

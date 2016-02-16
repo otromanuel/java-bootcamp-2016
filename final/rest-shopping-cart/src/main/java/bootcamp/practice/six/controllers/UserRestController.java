@@ -15,6 +15,8 @@ import bootcamp.practice.six.model.Cart;
 import bootcamp.practice.six.model.User;
 import bootcamp.practice.six.repositories.CartRepository;
 import bootcamp.practice.six.repositories.UserRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * Controller to access user related functionality.
@@ -22,6 +24,7 @@ import bootcamp.practice.six.repositories.UserRepository;
  */
 @RestController
 @RequestMapping("/user")
+@Api(value = "User REST API", produces = "application/json")
 public class UserRestController {
 	
 	private UserRepository userRepository;
@@ -35,6 +38,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(path = "register", method = RequestMethod.POST)
+	@ApiOperation(value = "Create account", notes = "Register a new shopping cart user")
 	public ResponseEntity<User> register(@RequestParam String username, @RequestParam String password) {
 		if  (!userRepository.findByUsername(username).isPresent()) {
 			Cart cart = cartRepository.save(new Cart());
@@ -48,6 +52,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(path = "login", method = RequestMethod.POST)
+	@ApiOperation(value = "Sign in", notes = "Authenticate user.")
 	public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
 		Optional<User> posibleUser = userRepository.findByUsername(username);
 		if ( posibleUser.isPresent() ) 
@@ -57,6 +62,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(path = "{username}/credit", method = RequestMethod.GET)
+	@ApiOperation(value = "Get credit", notes = "Get user's current credit to buy products.")
 	public ResponseEntity<Double> credit(@PathVariable String username) {
 		Optional<User> posibleUser = userRepository.findByUsername(username);
 		if (!posibleUser.isPresent())
@@ -65,7 +71,8 @@ public class UserRestController {
 			return new ResponseEntity<Double>(posibleUser.get().getCredit(), HttpStatus.OK);		
 	}
 	
-	@RequestMapping(path = "{username}/addcredit/{credit}", method = RequestMethod.GET)
+	@RequestMapping(path = "{username}/addcredit/{credit}", method = RequestMethod.PUT)
+	@ApiOperation(value = "Add credit", notes = "Add some credit to buy products.")
 	public ResponseEntity<Double> credit(@PathVariable String username, @PathVariable Double credit) {
 		Optional<User> posibleUser = userRepository.findByUsername(username);
 		if (!posibleUser.isPresent())
@@ -78,6 +85,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(path = "{username}/cart", method = RequestMethod.GET)
+	@ApiOperation(value = "Get cart", notes = "Get user's current cart.")
 	public ResponseEntity<Cart> getCart(@PathVariable String username) {
 		Optional<User> posibleUser = userRepository.findByUsername(username);
 		if (!posibleUser.isPresent())
