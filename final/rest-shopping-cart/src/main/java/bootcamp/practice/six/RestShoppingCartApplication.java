@@ -1,9 +1,6 @@
 package bootcamp.practice.six;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,11 +20,6 @@ import bootcamp.practice.six.repositories.CategoryRepository;
 import bootcamp.practice.six.repositories.ItemRepository;
 import bootcamp.practice.six.repositories.ProductRepository;
 import bootcamp.practice.six.repositories.UserRepository;
-import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.SecurityReference;
-import springfox.documentation.swagger.web.ApiKeyVehicle;
-import springfox.documentation.swagger.web.SecurityConfiguration;
-import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -62,21 +54,4 @@ public class RestShoppingCartApplication {
 		});
 	}
 
-	List<SecurityReference> defaultAuth() {
-		AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-		AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-		authorizationScopes[0] = authorizationScope;
-		return newArrayList(new SecurityReference("mykey", authorizationScopes));
-	}
-
-	@Bean
-	SecurityConfiguration security() {
-		return new SecurityConfiguration("test-app-client-id", "test-app-client-secret", "test-app-realm", "test-app", "apiKey",
-				ApiKeyVehicle.HEADER, "," /* scope separator */);
-	}
-
-	@Bean
-	UiConfiguration uiConfig() {
-		return new UiConfiguration("validatorUrl");
-	}
 }

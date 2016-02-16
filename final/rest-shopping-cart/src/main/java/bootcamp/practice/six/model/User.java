@@ -31,6 +31,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.cart = cart;
+		this.credit = 0D;
 	}
 
 	public String getUsername() {
